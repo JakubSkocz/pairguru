@@ -1,0 +1,12 @@
+.row
+  .col-md-8.col-md-offset-2.col-lg-8.col-lg-offset-2
+    %h1.text-center Top Commenters
+    %table.table.table-striped.pt-5
+      %tbody
+        - @commenters.each_with_index do |commenter, i|
+          %tr
+            %td= i + 1
+            %td
+              %h4
+                Author: #{commenter.email} - wrote #{commenter.comments.count} comments
+        

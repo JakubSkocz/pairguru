@@ -7,6 +7,8 @@ class MoviesController < ApplicationController
 
   def show
     @movie = Movie.find(params[:id])
+    @comments = @movie.comments
+    @comment = Comment.new
   end
 
   def send_info
@@ -20,4 +22,5 @@ class MoviesController < ApplicationController
     MovieExporter.new.call(current_user, file_path)
     redirect_to root_path, notice: "Movies exported"
   end
+
 end

@@ -23,5 +23,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable
 
+  has_many :comments
+  has_many :movies, through: :comments, dependent: :destroy
+         
   validates :phone_number, format: { with: /\A[+]?\d+(?>[- .]\d+)*\z/, allow_nil: true }
+  
+  scope :top_commenters, -> {left_joins(:comments).group(:id).order('COUNT(comments.id) DESC').where('comments.created_at > ?', 7.days.ago).limit(10)}
+
 end
